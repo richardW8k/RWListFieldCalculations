@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------------------------------------------
+Version 0.1
+    - Added List Field merge tags to the calculations merge tag dropdown
+    - Moved to add-on framwework
