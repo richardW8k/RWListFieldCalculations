@@ -3,7 +3,7 @@
 Plugin Name: Gravity Forms List Field Calculations Add-On
 Plugin URI: 
 Description: A simple add-on to enable the use of List fields in calculations.
-Version: 0.1
+Version: 0.2
 Author: Richard Wawrzyniak
 Author URI: 
 
@@ -72,7 +72,7 @@ if ( class_exists( 'GFForms' ) ) {
                             continue;
                         }
                         
-                        if ( $quick_check ){
+                        if ( $quick_check ) {
                             return true;
                         }
                         
