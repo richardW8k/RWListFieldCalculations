@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------------------------------------------
+Version 0.2
+    - Switched to gform_get_form_filter from gform_pre_render so inline script is positioned after the from
+    - Switched to gform_enqueue_scripts so script is only enqueued if a list field merge tag is found
+-------------------------------------------------------------------------------------------------------------------
 Version 0.1
     - Added List Field merge tags to the calculations merge tag dropdown
     - Moved to add-on framwework
