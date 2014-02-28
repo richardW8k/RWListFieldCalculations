@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------------------------------------------
+Version 0.3
+    - Changed columnSelector from input to :input to add support for drop down enabled columns
+    - Changed on method from blur event to change event to add support for drop downs
+-------------------------------------------------------------------------------------------------------------------
 Version 0.2
     - Switched to gform_get_form_filter from gform_pre_render so inline script is positioned after the from
     - Switched to gform_enqueue_scripts so script is only enqueued if a list field merge tag is found
