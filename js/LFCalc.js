@@ -7,18 +7,18 @@ gform.addAction( 'gform_calculation_event', function( mergeTag, calcObj, formula
         jQuery( fieldSelector )
             .on( 'click', '.add_list_item', function () {
                 jQuery( fieldSelector + ' .delete_list_item' ).removeProp( 'onclick' );
-                calcObj.runCalc( formulaField, formId );
+                calcObj.bindCalcEvent( inputId, formulaField, formId, 0 );
             })
             .on( 'click', '.delete_list_item', function () {
                 gformDeleteListItem( this, 0 );
-                calcObj.runCalc( formulaField, formId );
+                calcObj.bindCalcEvent( inputId, formulaField, formId, 0 );
             });
 
         if ( mergeTag[2] != null ) {
             var columnNo = mergeTag[2].substr( 1 ),
                 columnSelector = '.gfield_list_' + fieldId + '_cell' + columnNo + ' :input';
             jQuery( fieldSelector ).on( 'change', columnSelector, function () {
-                calcObj.runCalc( formulaField, formId );
+                calcObj.bindCalcEvent( inputId, formulaField, formId, 0 );
             });
         }
     }
