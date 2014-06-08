@@ -1,4 +1,4 @@
-gform.addAction( 'gform_calculation_event', function( mergeTag, calcObj, formulaField, formId ){
+gform.addAction( 'gform_calculation_event', function( mergeTag, formulaField, formId, calcObj ){
     var inputId = mergeTag[1],
         fieldId = parseInt( inputId ),
         fieldSelector = '#field_' + formId + '_' + fieldId;
