@@ -47,10 +47,7 @@ if ( class_exists( 'GFForms' ) ) {
             add_filter( 'gform_custom_merge_tags', array( $this, 'list_field_calculations_merge_tags' ), 10, 4 ) ;
         }
 
-        function has_list_field_merge_tag( $form, $quick_check ) {
-
-            $formula_fields = array();
-
+        function has_list_field_merge_tag( $form ) {
             foreach ( $form['fields'] as $field ) {
                 if ( !rgar( $field, 'calculationFormula') ) {
                     continue;
@@ -59,9 +56,7 @@ if ( class_exists( 'GFForms' ) ) {
                 preg_match_all( '/{[^{]*?:(\d+)\.?(\d+)?}/mi', $field['calculationFormula'], $matches, PREG_SET_ORDER );
 
                 if ( is_array( $matches ) ) {
-
                     foreach( $matches as $match ) {
-
                         // get the $field object for the provided id
                         $field_id = $match[1];
                         $lfield = RGFormsModel::get_field( $form, $field_id );
@@ -71,27 +66,18 @@ if ( class_exists( 'GFForms' ) ) {
                             continue;
                         }
 
-                        if ( $quick_check ) {
-                            return true;
-                        }
-
-                        $columnNo = isset( $match[2] ) ? $match[2] : null;
-                        $formula_fields[] = array( 'mergeTag' => $match[0], 'fieldId' => $match[1], 'columnNo' => $columnNo );
-
+                        return true;
                     }
-
                 }
 
             }
 
-            return empty( $formula_fields ) ? false : $formula_fields;
+            return false;
         }
 
         function list_field_calculations_script( $form ) {
 
-            $formula_fields = self::has_list_field_merge_tag( $form, true );
-
-            if ( $formula_fields ) {
+            if ( self::has_list_field_merge_tag( $form ) ) {
                 wp_enqueue_script( 'LFCalc', $this->get_base_url() . '/js/LFCalc.js', array( 'jquery','gform_gravityforms' ), $this->_version, true );
             }
 
