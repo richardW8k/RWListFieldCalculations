@@ -2,6 +2,8 @@ RWListFieldCalculations
 =======================
 
 A simple add-on to enable the use of List fields in calculations.
+Requires dev build of Gravity Forms 1.9
+NOT FOR PRODUCTION USE
 
 Installation
 ============
