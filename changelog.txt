@@ -1,4 +1,11 @@
 -------------------------------------------------------------------------------------------------------------------
+Version 0.4
+    - LFCalc.js replaced gform_calculation_result with two new hooks: 
+      - gform_calculation_event to handle triggering calculation when row added/removed and on colummn input change event
+      - gform_calculation_merge_tag_value to replace merge tag with row count or column total
+    - Remove function hooked to gform_get_form_filter
+    - increased minimum version to Gravity Forms 1.9
+    -------------------------------------------------------------------------------------------------------------------
 Version 0.3
     - Changed columnSelector from input to :input to add support for drop down enabled columns
     - Changed on method from blur event to change event to add support for drop downs
