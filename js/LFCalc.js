@@ -3,7 +3,7 @@ gform.addAction( 'gform_calculation_event', function( mergeTag, formulaField, fo
         fieldId = parseInt( inputId ),
         fieldSelector = '#field_' + formId + '_' + fieldId;
 
-    if ( jQuery( fieldSelector + ' table.gfield_list' ).length == 1 ) {
+    if ( jQuery( fieldSelector ).find( 'table.gfield_list' ).length == 1 ) {
         jQuery( fieldSelector )
             .on( 'click', '.add_list_item', function () {
                 jQuery( fieldSelector + ' .delete_list_item' ).removeProp( 'onclick' );
@@ -28,14 +28,13 @@ gform.addFilter( 'gform_calculation_merge_tag_value', function( value, mergeTag,
     var inputId = mergeTag[1],
         fieldId = parseInt( inputId ),
         fieldSelector = '#field_' + formId + '_' + fieldId,
-        listField = jQuery( fieldSelector + ' table.gfield_list' ),
         cellValue = 0;
 
-    if ( listField.length == 1 ) {
+    if ( jQuery( fieldSelector ).find( 'table.gfield_list' ).length == 1 ) {
 
         if ( mergeTag[2] == null ) {
             // if no column specified count the rows instead
-            value = jQuery( listField ).find( 'tbody tr' ).length;
+            value = jQuery( fieldSelector ).find( 'tbody tr' ).length;
         } else {
             var columnNo = mergeTag[2].substr( 1 ),
                 columnSelector = '.gfield_list_' + fieldId + '_cell' + columnNo + ' :input';
