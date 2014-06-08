@@ -3,7 +3,7 @@
 Plugin Name: Gravity Forms List Field Calculations Add-On
 Plugin URI:
 Description: A simple add-on to enable the use of List fields in calculations.
-Version: 0.2
+Version: 0.4
 Author: Richard Wawrzyniak
 Author URI:
 
@@ -32,8 +32,8 @@ if ( class_exists( 'GFForms' ) ) {
 
     class RWListFieldCalculations extends GFAddOn {
 
-        protected $_version = '0.3';
-        protected $_min_gravityforms_version = '1.8.0';
+        protected $_version = '0.4';
+        protected $_min_gravityforms_version = '1.8.9';
         protected $_slug = 'RWListFieldCalculations';
         protected $_path = 'RWListFieldCalculations/RWListFieldCalculations.php';
         protected $_full_path = __FILE__;
@@ -43,7 +43,6 @@ if ( class_exists( 'GFForms' ) ) {
         public function init(){
             parent::init();
             add_action( 'gform_enqueue_scripts', array( $this, 'list_field_calculations_script' ), 10, 2 );
-            add_filter( 'gform_get_form_filter', array( $this, 'list_field_calculations_add_var' ), 10, 2 );
             add_filter( 'gform_calculation_formula', array( $this, 'list_field_calculations' ), 10, 4 );
             add_filter( 'gform_custom_merge_tags', array( $this, 'list_field_calculations_merge_tags' ), 10, 4 ) ;
         }
@@ -96,18 +95,6 @@ if ( class_exists( 'GFForms' ) ) {
                 wp_enqueue_script( 'LFCalc', $this->get_base_url() . '/js/LFCalc.js', array( 'jquery','gform_gravityforms' ), $this->_version, true );
             }
 
-        }
-
-        function list_field_calculations_add_var( $form_string, $form ) {
-
-            $formula_fields = self::has_list_field_merge_tag( $form, false );
-
-            if ( $formula_fields ) {
-                $script = 'var LFCalc = ' . json_encode( $formula_fields ) . ';';
-                $form_string .= "<script type='text/javascript'>{$script}</script>";
-            }
-
-            return $form_string;
         }
 
         function list_field_calculations( $formula, $field, $form, $lead ) {
