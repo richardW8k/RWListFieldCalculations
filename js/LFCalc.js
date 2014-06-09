@@ -25,8 +25,7 @@ gform.addAction( 'gform_calculation_events', function( mergeTagArr, formulaField
 
 gform.addFilter( 'gform_calculation_merge_tag_value', function( value, mergeTagArr, isVisible, formulaField, formId ){
     var fieldId = parseInt( mergeTagArr[1] ),
-        fieldSelector = '#field_' + formId + '_' + fieldId,
-        cellValue = 0;
+        fieldSelector = '#field_' + formId + '_' + fieldId;
     
     // check if merge tag belongs to a List field and that it isn't hidden by conditional logic
     if ( jQuery( fieldSelector + ' table.gfield_list' ).length == 1 && isVisible ) {
@@ -36,7 +35,8 @@ gform.addFilter( 'gform_calculation_merge_tag_value', function( value, mergeTagA
             value = jQuery( fieldSelector + ' table.gfield_list tbody tr' ).length;
         } else {
             var columnNo = mergeTagArr[2].substr( 1 ),
-                columnSelector = '.gfield_list_' + fieldId + '_cell' + columnNo + ' :input';
+                columnSelector = '.gfield_list_' + fieldId + '_cell' + columnNo + ' :input',
+                cellValue = 0;
                 
             // if column specified get the input values from each row and calculate the sum
             jQuery( columnSelector ).each( function () {
