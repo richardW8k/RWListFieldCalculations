@@ -1,4 +1,4 @@
-gform.addAction( 'gform_calculation_events', function( mergeTagArr, formulaField, formId, calcObj ){
+gform.addAction( 'gform_post_calculation_events', function( mergeTagArr, formulaField, formId, calcObj ){
     var fieldId = parseInt( mergeTagArr[1] ),
         fieldSelector = '#field_' + formId + '_' + fieldId;
 
@@ -23,7 +23,7 @@ gform.addAction( 'gform_calculation_events', function( mergeTagArr, formulaField
     }
 });
 
-gform.addFilter( 'gform_calculation_merge_tag_value', function( value, mergeTagArr, isVisible, formulaField, formId ){
+gform.addFilter( 'gform_merge_tag_value_pre_calculation', function( value, mergeTagArr, isVisible, formulaField, formId ){
     var fieldId = parseInt( mergeTagArr[1] ),
         fieldSelector = '#field_' + formId + '_' + fieldId;
     
