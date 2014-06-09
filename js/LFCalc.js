@@ -24,13 +24,13 @@ gform.addAction( 'gform_calculation_events', function( mergeTag, formulaField, f
     }
 });
 
-gform.addFilter( 'gform_calculation_merge_tag_value', function( value, mergeTag, formulaField, formId ){
+gform.addFilter( 'gform_calculation_merge_tag_value', function( value, mergeTag, isVisible, formulaField, formId ){
     var inputId = mergeTag[1],
         fieldId = parseInt( inputId ),
         fieldSelector = '#field_' + formId + '_' + fieldId,
         cellValue = 0;
 
-    if ( jQuery( fieldSelector + ' table.gfield_list' ).length == 1 ) {
+    if ( jQuery( fieldSelector + ' table.gfield_list' ).length == 1 && isVisible ) {
 
         if ( mergeTag[2] == null ) {
             // if no column specified count the rows instead
