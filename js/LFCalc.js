@@ -1,5 +1,5 @@
-gform.addAction( 'gform_calculation_events', function( mergeTag, formulaField, formId, calcObj ){
-    var fieldId = parseInt( mergeTag[1] ),
+gform.addAction( 'gform_calculation_events', function( mergeTagArr, formulaField, formId, calcObj ){
+    var fieldId = parseInt( mergeTagArr[1] ),
         fieldSelector = '#field_' + formId + '_' + fieldId;
 
     if ( jQuery( fieldSelector + ' table.gfield_list' ).length == 1 ) {
@@ -13,7 +13,7 @@ gform.addAction( 'gform_calculation_events', function( mergeTag, formulaField, f
                 calcObj.bindCalcEvent( fieldId, formulaField, formId, 0 );
             });
 
-        if ( mergeTag[2] != null ) {
+        if ( mergeTagArr[2] != null ) {
             var columnNo = mergeTag[2].substr( 1 ),
                 columnSelector = '.gfield_list_' + fieldId + '_cell' + columnNo + ' :input';
             jQuery( fieldSelector ).on( 'change', columnSelector, function () {
@@ -23,19 +23,19 @@ gform.addAction( 'gform_calculation_events', function( mergeTag, formulaField, f
     }
 });
 
-gform.addFilter( 'gform_calculation_merge_tag_value', function( value, mergeTag, isVisible, formulaField, formId ){
-    var fieldId = parseInt( mergeTag[1] ),
+gform.addFilter( 'gform_calculation_merge_tag_value', function( value, mergeTagArr, isVisible, formulaField, formId ){
+    var fieldId = parseInt( mergeTagArr[1] ),
         fieldSelector = '#field_' + formId + '_' + fieldId,
         cellValue = 0;
     
     // check if merge tag belongs to a List field and that it isn't hidden by conditional logic
     if ( jQuery( fieldSelector + ' table.gfield_list' ).length == 1 && isVisible ) {
 
-        if ( mergeTag[2] == null ) {
+        if ( mergeTagArr[2] == null ) {
             // if no column specified count the rows
             value = jQuery( fieldSelector + ' table.gfield_list tbody tr' ).length;
         } else {
-            var columnNo = mergeTag[2].substr( 1 ),
+            var columnNo = mergeTagArr[2].substr( 1 ),
                 columnSelector = '.gfield_list_' + fieldId + '_cell' + columnNo + ' :input';
                 
             // if column specified get the input values from each row and calculate the sum
