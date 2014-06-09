@@ -28,7 +28,7 @@ gform.addFilter( 'gform_calculation_merge_tag_value', function( value, mergeTag,
         fieldSelector = '#field_' + formId + '_' + fieldId,
         cellValue = 0;
     
-    // check if merge tag belongs to a List field
+    // check if merge tag belongs to a List field and that it isn't hidden by conditional logic
     if ( jQuery( fieldSelector + ' table.gfield_list' ).length == 1 && isVisible ) {
 
         if ( mergeTag[2] == null ) {
