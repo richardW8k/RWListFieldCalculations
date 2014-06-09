@@ -27,16 +27,18 @@ gform.addFilter( 'gform_calculation_merge_tag_value', function( value, mergeTag,
     var fieldId = parseInt( mergeTag[1] ),
         fieldSelector = '#field_' + formId + '_' + fieldId,
         cellValue = 0;
-
+    
+    // check if merge tag belongs to a List field
     if ( jQuery( fieldSelector + ' table.gfield_list' ).length == 1 && isVisible ) {
 
         if ( mergeTag[2] == null ) {
-            // if no column specified count the rows instead
+            // if no column specified count the rows
             value = jQuery( fieldSelector + ' table.gfield_list tbody tr' ).length;
         } else {
             var columnNo = mergeTag[2].substr( 1 ),
                 columnSelector = '.gfield_list_' + fieldId + '_cell' + columnNo + ' :input';
-
+                
+            // if column specified get the input values from each row and calculate the sum
             jQuery( columnSelector ).each( function () {
                 cellValue = gformToNumber( jQuery( this ).val() );
                 value += parseFloat( cellValue ) || 0;
