@@ -14,7 +14,7 @@ gform.addAction( 'gform_post_calculation_events', function( mergeTagArr, formula
             });
 
         if ( mergeTagArr[2] != null ) {
-            var columnNo = mergeTag[2].substr( 1 ),
+            var columnNo = mergeTagArr[2].substr( 1 ),
                 columnSelector = '.gfield_list_' + fieldId + '_cell' + columnNo + ' :input';
             jQuery( fieldSelector ).on( 'change', columnSelector, function () {
                 calcObj.bindCalcEvent( fieldId, formulaField, formId, 0 );
