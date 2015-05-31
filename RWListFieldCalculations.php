@@ -3,7 +3,7 @@
 Plugin Name: Gravity Forms List Field Calculations Add-On
 Plugin URI:
 Description: A simple add-on to enable the use of List fields in calculations.
-Version: 0.4
+Version: 0.5
 Author: Richard Wawrzyniak
 Author URI:
 
@@ -32,42 +32,46 @@ if ( class_exists( 'GFForms' ) ) {
 
     class RWListFieldCalculations extends GFAddOn {
 
-        protected $_version = '0.4';
-        protected $_min_gravityforms_version = '1.8.9';
+        protected $_version = '0.5';
+        protected $_min_gravityforms_version = '1.9.9.8';
         protected $_slug = 'RWListFieldCalculations';
         protected $_path = 'RWListFieldCalculations/RWListFieldCalculations.php';
         protected $_full_path = __FILE__;
         protected $_title = 'Gravity Forms List Field Calculations Add-On';
         protected $_short_title = 'List Field Calculations';
 
-        public function init(){
+        public function init() {
             parent::init();
             add_action( 'gform_enqueue_scripts', array( $this, 'list_field_calculations_script' ), 10, 2 );
             add_filter( 'gform_calculation_formula', array( $this, 'list_field_calculations' ), 10, 4 );
-            add_filter( 'gform_custom_merge_tags', array( $this, 'list_field_calculations_merge_tags' ), 10, 4 ) ;
+            add_filter( 'gform_custom_merge_tags', array( $this, 'list_field_calculations_merge_tags' ), 10, 4 );
         }
 
         function has_list_field_merge_tag( $form ) {
             foreach ( $form['fields'] as $field ) {
-                if ( !rgar( $field, 'calculationFormula') ) {
+                if ( ! $field->has_calculation() ) {
                     continue;
                 }
 
-                preg_match_all( '/{[^{]*?:(\d+)\.?(\d+)?}/mi', $field['calculationFormula'], $matches, PREG_SET_ORDER );
+                preg_match_all( '/{[^{]*?:(\d+)\.?(\d+)?}/mi', $field->calculationFormula, $matches, PREG_SET_ORDER );
 
                 if ( is_array( $matches ) ) {
-                    foreach( $matches as $match ) {
+
+                    foreach ( $matches as $match ) {
+
                         // get the $field object for the provided id
                         $field_id = $match[1];
-                        $lfield = RGFormsModel::get_field( $form, $field_id );
+                        $lfield   = RGFormsModel::get_field( $form, $field_id );
 
                         // check the field type as we only want the rest of the function to run if the field type is list
-                        if ( RGFormsModel::get_input_type( $lfield ) != 'list' ) {
+                        if ( $lfield->get_input_type() != 'list' ) {
                             continue;
                         }
 
                         return true;
+
                     }
+
                 }
 
             }
@@ -78,7 +82,10 @@ if ( class_exists( 'GFForms' ) ) {
         function list_field_calculations_script( $form ) {
 
             if ( self::has_list_field_merge_tag( $form ) ) {
-                wp_enqueue_script( 'LFCalc', $this->get_base_url() . '/js/LFCalc.js', array( 'jquery','gform_gravityforms' ), $this->_version, true );
+                wp_enqueue_script( 'LFCalc', $this->get_base_url() . '/js/LFCalc.js', array(
+                    'jquery',
+                    'gform_gravityforms'
+                ), $this->_version, true );
             }
 
         }
@@ -89,7 +96,7 @@ if ( class_exists( 'GFForms' ) ) {
             // {List:1} - {Label:ID} - count rows
             preg_match_all( '/{[^{]*?:(\d+)\.?(\d+)?}/mi', $formula, $matches, PREG_SET_ORDER );
 
-            if( is_array( $matches ) ) {
+            if ( is_array( $matches ) ) {
 
                 foreach ( $matches as $match ) {
 
@@ -99,35 +106,35 @@ if ( class_exists( 'GFForms' ) ) {
 
                     // get the $field object for the provided id
                     $field_id = $match[1];
-                    $field = RGFormsModel::get_field( $form, $field_id );
+                    $field    = RGFormsModel::get_field( $form, $field_id );
 
                     // check the field type as we only want the rest of the function to run if the field type is list
-                    if ( RGFormsModel::get_input_type( $field ) != 'list' ) {
+                    if ( $field->get_input_type() != 'list' ) {
                         continue;
                     }
 
                     // get the list fields values from the $lead
-                    $list_values = unserialize( $lead[$field_id] );
-                    $count = 0;
+                    $list_values = unserialize( $lead[ $field_id ] );
+                    $count       = 0;
 
                     // if column number found sum column values otherwise count number of rows
                     if ( isset( $match[2] ) ) {
 
                         // count the actual number of columns
-                        $column_count = count( rgar( $field,'choices' ) );
+                        $column_count = count( $field->choices );
 
                         if ( $column_count > 1 ) {
                             // subtract 1 from column number as the choices array is zero based
                             $column_num = $match[2] - 1;
                             // get the column label so we can use that as the key to the multi-column values
-                            $column = rgars( $field, "choices/{$column_num}/text" );
+                            $column = rgars( $field->choices, "{$column_num}/text" );
                         }
 
                         foreach ( $list_values as $value ) {
                             if ( $column_count == 1 ) {
                                 $count += GFCommon::to_number( $value );
                             } else {
-                                $count += GFCommon::to_number( $value[$column] );
+                                $count += GFCommon::to_number( $value[ $column ] );
                             }
                         }
 
@@ -156,20 +163,23 @@ if ( class_exists( 'GFForms' ) ) {
             foreach ( $fields as $field ) {
 
                 // check the field type as we only want to generate merge tags for list fields
-                if ( $field['type'] != 'list' ) {
+                if ( $field->get_input_type() != 'list' ) {
                     continue;
                 }
 
-                $label = $field['label'];
-                $tag = '{' . $label . ':' . $field['id'];
-                $column_count = count( $field['choices'] );
+                $label = $field->label;
+                $tag = '{' . $label . ':' . $field->id;
+                $column_count = count( $field->choices );
 
                 if ( $column_count > 1 ) {
 
                     $i = 0;
 
-                    foreach ( $field['choices'] as $column ) {
-                        $merge_tags[] = array( 'label' => $label . ' - ' . $column['text'] . ' (Column sum)', 'tag' => $tag . '.' . ++$i .'}' );
+                    foreach ( $field->choices as $column ) {
+                        $merge_tags[] = array(
+                            'label' => $label . ' - ' . $column['text'] . ' (Column sum)',
+                            'tag'   => $tag . '.' . ++ $i . '}'
+                        );
                     }
 
                 } else {
