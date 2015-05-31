@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------------------------------------------
+Version 0.5
+    - Updated to use object notation for the $field instead of array access.
+    - Updated min Gravity Forms version to 1.9.9.8
+    - Fixed typo in the gform_post_calculation_events function.
+
+-------------------------------------------------------------------------------------------------------------------
 Version 0.4
     - LFCalc.js replaced gform_calculation_result with two new hooks: 
       - gform_calculation_event to handle triggering calculation when row added/removed and on colummn input change event
