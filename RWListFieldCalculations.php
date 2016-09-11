@@ -62,6 +62,11 @@ if ( class_exists( 'GFForms' ) ) {
                         // get the $field object for the provided id
                         $field_id = $match[1];
                         $lfield   = RGFormsModel::get_field( $form, $field_id );
+                        
+                        // check that we have a field
+                        if ( ! $lfield ) {
+                            continue;
+                        }
 
                         // check the field type as we only want the rest of the function to run if the field type is list
                         if ( $lfield->get_input_type() != 'list' ) {
@@ -107,6 +112,11 @@ if ( class_exists( 'GFForms' ) ) {
                     // get the $field object for the provided id
                     $field_id = $match[1];
                     $field    = RGFormsModel::get_field( $form, $field_id );
+                    
+                    // check that we have a field
+                    if ( ! $field ) {
+                        continue;
+                    }
 
                     // check the field type as we only want the rest of the function to run if the field type is list
                     if ( $field->get_input_type() != 'list' ) {
