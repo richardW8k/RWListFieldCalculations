@@ -124,7 +124,7 @@ if ( class_exists( 'GFForms' ) ) {
                     }
 
                     // get the list fields values from the $lead
-                    $list_values = unserialize( $lead[ $field_id ] );
+                    $list_values = empty( $lead[ $field_id ] ) ? array() : unserialize( $lead[ $field_id ] );
                     $count       = 0;
 
                     // if column number found sum column values otherwise count number of rows
