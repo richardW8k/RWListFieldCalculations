@@ -33,7 +33,7 @@ if ( class_exists( 'GFForms' ) ) {
     class RWListFieldCalculations extends GFAddOn {
 
         protected $_version = '0.5';
-        protected $_min_gravityforms_version = '1.9.9.8';
+        protected $_min_gravityforms_version = '2.3';
         protected $_slug = 'RWListFieldCalculations';
         protected $_path = 'RWListFieldCalculations/RWListFieldCalculations.php';
         protected $_full_path = __FILE__;
@@ -61,7 +61,7 @@ if ( class_exists( 'GFForms' ) ) {
 
                         // get the $field object for the provided id
                         $field_id = $match[1];
-                        $lfield   = RGFormsModel::get_field( $form, $field_id );
+                        $lfield   = GFAPI::get_field( $form, $field_id );
                         
                         // check that we have a field
                         if ( ! $lfield ) {
@@ -111,7 +111,7 @@ if ( class_exists( 'GFForms' ) ) {
 
                     // get the $field object for the provided id
                     $field_id = $match[1];
-                    $field    = RGFormsModel::get_field( $form, $field_id );
+                    $field    = GFAPI::get_field( $form, $field_id );
                     
                     // check that we have a field
                     if ( ! $field ) {
