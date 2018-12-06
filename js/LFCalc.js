@@ -32,11 +32,13 @@ gform.addFilter( 'gform_merge_tag_value_pre_calculation', function( value, merge
 
         if ( mergeTagArr[2] == null ) {
             // if no column specified count the rows
-            value = jQuery( fieldSelector + ' table.gfield_list tbody tr' ).length;
+            value = jQuery( fieldSelector + ' table.gfield_list tbody tr.gfield_list_group' ).length;
         } else {
             var columnNo = mergeTagArr[2].substr( 1 ),
                 columnSelector = '.gfield_list_' + fieldId + '_cell' + columnNo + ' :input',
                 cellValue = 0;
+
+            value = 0;
                 
             // if column specified get the input values from each row and calculate the sum
             jQuery( columnSelector ).each( function () {
