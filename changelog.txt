@@ -1,4 +1,9 @@
 -------------------------------------------------------------------------------------------------------------------
+Version 0.6
+    - Updated min Gravity Forms version to 2.3
+    - Fixed the gform_merge_tag_value_pre_calculation callback for Gravity Forms 2.4.
+
+-------------------------------------------------------------------------------------------------------------------
 Version 0.5
     - Updated to use object notation for the $field instead of array access.
     - Updated min Gravity Forms version to 1.9.9.8
