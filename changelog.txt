@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------------------------------------------
+Version 0.7
+    - Use gravity form hook gform_loaded for loading the addon
+
+-------------------------------------------------------------------------------------------------------------------
 Version 0.6
     - Updated min Gravity Forms version to 2.3
     - Fixed the gform_merge_tag_value_pre_calculation callback for Gravity Forms 2.4.
